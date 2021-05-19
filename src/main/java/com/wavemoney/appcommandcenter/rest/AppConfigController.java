@@ -19,19 +19,23 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api")
 public class AppConfigController {
 
 	@Autowired AppConfigRepository repo;
 	
-	@GetMapping("/config/{app}")
+	@GetMapping("/health-check")
+	String healtCheck()
+	{
+		return "Fine";
+	}
+	@GetMapping("/api/config/{app}")
 	Object getConfig(@PathVariable("app") String app)
 	{
 	
 		return this.repo.findByApp(app);
 	}
 	
-	@PostMapping("/config")
+	@PostMapping("/api/config")
 	  public ResponseEntity save(@RequestBody final AppConfigDto dto) {
 		System.out.println("API ");
 		AppConfig config = getConfig(dto);
